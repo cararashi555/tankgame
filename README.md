@@ -1,7 +1,7 @@
 # csc413-tankgame
 
-## Student Name  :
-## Student ID    :
+## Student Name  : Maria Seljak
+## Student ID    : 915736307
 
 
 ## src folder is to be used to store source code only.
