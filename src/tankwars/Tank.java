@@ -1,4 +1,4 @@
-package tankrotationexample;
+package tankwars;
 
 
 
@@ -6,11 +6,8 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-/**
- *
- * @author anthony-pc
- */
-public class Tank{
+
+public class Tank implements CollidableObject {
 
 
     private int x;
