@@ -15,8 +15,8 @@ public class Background extends JPanel {
     private void initBackground(BufferedImage img) {
         loadImage(img);
 
-        int width = 1280;
-        int height = 960;
+        int width = img.getWidth();
+        int height = img.getHeight();
         setPreferredSize(new Dimension(width, height));
     }
 
@@ -26,6 +26,12 @@ public class Background extends JPanel {
 
     void drawImage(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(this.background, 0,0, null);
+        int world_width = 1280;
+        for(int i = 0; i < world_width; i+=320){
+            int world_height = 960;
+            for(int j = 0; j < world_height; j+=240){
+                g2d.drawImage(this.background, i,j, null);
+            }
+        }
     }
 }

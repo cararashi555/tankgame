@@ -38,8 +38,10 @@ public class TRE extends JPanel  {
 
             while (true) {
                 trex.t1.update();
+                trex.t2.update();
                 trex.repaint();
                 System.out.println(trex.t1);
+                System.out.println(trex.t2);
                 Thread.sleep(1000 / 144);
             }
         } catch (InterruptedException ignored) {
@@ -59,23 +61,26 @@ public class TRE extends JPanel  {
             System.out.println(System.getProperty("user.dir"));
 
             t1img = read(new File("resources/tank1.png"));
-            background = read(new File("resources/background.png"));
+            background = read(new File("resources/Background.bmp"));
             backgroundImg = new Background(background);
 
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
-        t1 = new Tank(200, 200, 0, 0, 0, t1img);
+        t1 = new Tank(200, 400, 0, 0, 0, t1img);
+        t2 = new Tank(1000, 400, 0, 0, 180, t1img);
 
 
-        TankControl tc1 = new TankControl(t1, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_ENTER);
+        TankControl tc1 = new TankControl(t1, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_SPACE);
+        TankControl tc2 = new TankControl(t2, KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_SHIFT);
+
 
         this.jf.setLayout(new BorderLayout());
         this.jf.add(this);
 
 
         this.jf.addKeyListener(tc1);
-
+        this.jf.addKeyListener(tc2);
 
         this.jf.setSize(TRE.SCREEN_WIDTH, TRE.SCREEN_HEIGHT + 30);
         this.jf.setResizable(false);
@@ -95,6 +100,7 @@ public class TRE extends JPanel  {
 
         this.backgroundImg.drawImage(buffer);
         this.t1.drawImage(buffer);
+        this.t2.drawImage(buffer);
         g2.drawImage(world,0,0,null);
     }
 

@@ -17,7 +17,8 @@ public class Tank implements CollidableObject {
     private int angle;
 
     private final int R = 2;
-    private final int ROTATIONSPEED = 4;
+    private final int ROTATIONSPEED = 2;
+    private int currentHealth = 100;
 
 
 
@@ -26,6 +27,7 @@ public class Tank implements CollidableObject {
     private boolean DownPressed;
     private boolean RightPressed;
     private boolean LeftPressed;
+    private boolean ShootPressed;
 
 
     Tank(int x, int y, int vx, int vy, int angle, BufferedImage img) {
@@ -38,6 +40,9 @@ public class Tank implements CollidableObject {
 
     }
 
+    void setCurrentHealth(int currentHealth){
+        this.currentHealth = currentHealth;
+    }
 
     void toggleUpPressed() {
         this.UpPressed = true;
@@ -53,6 +58,10 @@ public class Tank implements CollidableObject {
 
     void toggleLeftPressed() {
         this.LeftPressed = true;
+    }
+
+    void toggleShootPressed() {
+        this.ShootPressed = true;
     }
 
     void unToggleUpPressed() {
@@ -71,6 +80,10 @@ public class Tank implements CollidableObject {
         this.LeftPressed = false;
     }
 
+    void unToggleShootPressed() {
+        this.ShootPressed = false;
+    }
+
 
 
     public void update() {
@@ -87,7 +100,9 @@ public class Tank implements CollidableObject {
         if (this.RightPressed) {
             this.rotateRight();
         }
-
+        if (this.ShootPressed) {
+            this.shootBullet();
+        }
 
     }
 
@@ -115,8 +130,9 @@ public class Tank implements CollidableObject {
         checkBorder();
     }
 
+    private void shootBullet() {
 
-
+    }
 
     private void checkBorder() {
         if (x < 30) {
