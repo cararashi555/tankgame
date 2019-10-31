@@ -1,5 +1,5 @@
 package tankwars;
 
-abstract class Wall {
+public class Camera {
 
 }

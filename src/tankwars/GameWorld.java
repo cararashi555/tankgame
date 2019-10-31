@@ -6,7 +6,6 @@
 package tankwars;
 
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -17,8 +16,7 @@ import java.io.IOException;
 import static javax.imageio.ImageIO.read;
 
 
-public class TRE extends JPanel  {
-
+public class GameWorld extends JPanel  {
 
     public static final int SCREEN_WIDTH = 1280;
     public static final int SCREEN_HEIGHT = 960;
@@ -32,13 +30,11 @@ public class TRE extends JPanel  {
 
     public static void main(String[] args) {
         Thread x;
-        TRE trex = new TRE();
+        GameWorld trex = new GameWorld();
         trex.init();
         try {
 
             while (true) {
-                trex.t1.update();
-                trex.t2.update();
                 trex.repaint();
                 System.out.println(trex.t1);
                 System.out.println(trex.t2);
@@ -47,13 +43,12 @@ public class TRE extends JPanel  {
         } catch (InterruptedException ignored) {
 
         }
-
     }
 
     private void init() {
         this.jf = new JFrame("Tank Wars");
 
-        this.world = new BufferedImage(TRE.SCREEN_WIDTH, TRE.SCREEN_HEIGHT, BufferedImage.TYPE_INT_RGB);
+        this.world = new BufferedImage(GameWorld.SCREEN_WIDTH, GameWorld.SCREEN_HEIGHT, BufferedImage.TYPE_INT_RGB);
         BufferedImage t1img = null, t2img = null, background;
 
         try {
@@ -74,7 +69,6 @@ public class TRE extends JPanel  {
         TankControl tc1 = new TankControl(t1, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_SPACE);
         TankControl tc2 = new TankControl(t2, KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_SHIFT);
 
-
         this.jf.setLayout(new BorderLayout());
         this.jf.add(this);
 
@@ -82,18 +76,23 @@ public class TRE extends JPanel  {
         this.jf.addKeyListener(tc1);
         this.jf.addKeyListener(tc2);
 
-        this.jf.setSize(TRE.SCREEN_WIDTH, TRE.SCREEN_HEIGHT + 30);
+        this.jf.setSize(GameWorld.SCREEN_WIDTH, GameWorld.SCREEN_HEIGHT + 30);
         this.jf.setResizable(false);
         jf.setLocationRelativeTo(null);
 
         this.jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.jf.setVisible(true);
 
+    }
 
+    private void update(){
+        t1.update();
+        t2.update();
     }
 
     @Override
     public void paintComponent(Graphics g) {
+        update();
         Graphics2D g2 = (Graphics2D) g;
         buffer = world.createGraphics();
         super.paintComponent(g2);

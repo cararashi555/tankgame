@@ -1,12 +1,8 @@
-package tankwars;
+package tankwars.walls;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
-public class Bullet implements CollidableObject {
-    private BufferedImage bulletImg;
-    private BufferedImage explosion;
-
+public class UnbreakableWall extends Wall{
     @Override
     public boolean checkCollision() {
         return false;

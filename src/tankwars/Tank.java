@@ -5,10 +5,10 @@ package tankwars;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 
 public class Tank implements CollidableObject {
-
 
     private int x;
     private int y;
@@ -19,8 +19,7 @@ public class Tank implements CollidableObject {
     private final int R = 2;
     private final int ROTATIONSPEED = 2;
     private int currentHealth = 100;
-
-
+    private ArrayList<Bullet> bullets;
 
     private BufferedImage img;
     private boolean UpPressed;
@@ -103,7 +102,6 @@ public class Tank implements CollidableObject {
         if (this.ShootPressed) {
             this.shootBullet();
         }
-
     }
 
     private void rotateLeft() {
@@ -134,18 +132,28 @@ public class Tank implements CollidableObject {
 
     }
 
+    @Override
+    public boolean checkCollision() {
+        return false;
+    }
+
+    @Override
+    public Rectangle getRectangle() {
+        return null;
+    }
+
     private void checkBorder() {
         if (x < 30) {
             x = 30;
         }
-        if (x >= TRE.SCREEN_WIDTH - 88) {
-            x = TRE.SCREEN_WIDTH - 88;
+        if (x >= GameWorld.SCREEN_WIDTH - 88) {
+            x = GameWorld.SCREEN_WIDTH - 88;
         }
         if (y < 40) {
             y = 40;
         }
-        if (y >= TRE.SCREEN_HEIGHT - 80) {
-            y = TRE.SCREEN_HEIGHT - 80;
+        if (y >= GameWorld.SCREEN_HEIGHT - 80) {
+            y = GameWorld.SCREEN_HEIGHT - 80;
         }
     }
 
@@ -161,7 +169,5 @@ public class Tank implements CollidableObject {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(this.img, rotation, null);
     }
-
-
 
 }
