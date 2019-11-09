@@ -3,6 +3,6 @@ package tankwars;
 import java.awt.*;
 
 public interface CollidableObject {
-    public boolean checkCollision();
+    public void checkCollision();
     public Rectangle getRectangle();
 }

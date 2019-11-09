@@ -19,6 +19,7 @@ public class Tank implements CollidableObject {
     private final int R = 2;
     private final int ROTATIONSPEED = 2;
     private int currentHealth = 100;
+    private int lives = 3;
     private ArrayList<Bullet> bullets;
 
     private BufferedImage img;
@@ -39,9 +40,19 @@ public class Tank implements CollidableObject {
 
     }
 
+    public int getX() { return x; }
+
+    public int getY() { return y; }
+
     void setCurrentHealth(int currentHealth){
         this.currentHealth = currentHealth;
     }
+
+    public int getCurrentHealth() { return currentHealth; }
+
+    public int getLives() { return lives; }
+
+    public void setLives(int lives) { this.lives = lives; }
 
     void toggleUpPressed() {
         this.UpPressed = true;
@@ -133,14 +144,15 @@ public class Tank implements CollidableObject {
     }
 
     @Override
-    public boolean checkCollision() {
-        return false;
+    public void checkCollision() {
+
     }
 
     @Override
     public Rectangle getRectangle() {
-        return null;
+        return new Rectangle(x, y, img.getWidth(), img.getHeight());
     }
+
 
     private void checkBorder() {
         if (x < 30) {

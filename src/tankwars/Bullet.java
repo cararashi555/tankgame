@@ -6,14 +6,22 @@ import java.awt.image.BufferedImage;
 public class Bullet implements CollidableObject {
     private BufferedImage bulletImg;
     private BufferedImage explosion;
+    private Tank owner;
+    private int x, y;
+
+    Bullet(int x, int y, Tank owner){
+        this.x = x;
+        this.y = y;
+        this.owner = owner;
+    }
 
     @Override
-    public boolean checkCollision() {
-        return false;
+    public void checkCollision() {
+
     }
 
     @Override
     public Rectangle getRectangle() {
-        return null;
+        return new Rectangle(x, y, bulletImg.getWidth(), bulletImg.getHeight());
     }
 }

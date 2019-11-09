@@ -2,7 +2,6 @@ package tankwars;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 public class Background extends JPanel {
@@ -26,10 +25,8 @@ public class Background extends JPanel {
 
     void drawImage(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        int world_width = 1280;
-        for(int i = 0; i < world_width; i+=320){
-            int world_height = 960;
-            for(int j = 0; j < world_height; j+=240){
+        for(int i = 0; i < GameWorld.SCREEN_WIDTH; i+=background.getWidth()){
+            for(int j = 0; j < GameWorld.SCREEN_HEIGHT; j+=background.getHeight()){
                 g2d.drawImage(this.background, i,j, null);
             }
         }

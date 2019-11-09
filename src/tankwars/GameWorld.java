@@ -6,12 +6,15 @@
 package tankwars;
 
 
+import tankwars.walls.Wall;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static javax.imageio.ImageIO.read;
 
@@ -22,10 +25,12 @@ public class GameWorld extends JPanel  {
     public static final int SCREEN_HEIGHT = 960;
     private BufferedImage world;
     private Background backgroundImg;
+    private MapMaker map;
     private Graphics2D buffer;
     private JFrame jf;
     private Tank t1;
     private Tank t2;
+    private ArrayList<Bullet> bullets;
 
 
     public static void main(String[] args) {
@@ -49,7 +54,7 @@ public class GameWorld extends JPanel  {
         this.jf = new JFrame("Tank Wars");
 
         this.world = new BufferedImage(GameWorld.SCREEN_WIDTH, GameWorld.SCREEN_HEIGHT, BufferedImage.TYPE_INT_RGB);
-        BufferedImage t1img = null, t2img = null, background;
+        BufferedImage t1img = null, background, unbreakableWall;
 
         try {
             BufferedImage tmp;
@@ -58,6 +63,8 @@ public class GameWorld extends JPanel  {
             t1img = read(new File("resources/tank1.png"));
             background = read(new File("resources/Background.bmp"));
             backgroundImg = new Background(background);
+            unbreakableWall = read(new File("resources/Wall1.gif"));
+            map = new MapMaker(unbreakableWall);
 
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
@@ -98,9 +105,10 @@ public class GameWorld extends JPanel  {
         super.paintComponent(g2);
 
         this.backgroundImg.drawImage(buffer);
+        this.map.drawImage(buffer);
         this.t1.drawImage(buffer);
         this.t2.drawImage(buffer);
-        g2.drawImage(world,0,0,null);
+        g2.drawImage(world, 0 , 0 , null);
     }
 
 
