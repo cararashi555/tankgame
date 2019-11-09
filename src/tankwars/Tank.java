@@ -15,11 +15,12 @@ public class Tank implements CollidableObject {
     private int vx;
     private int vy;
     private int angle;
+    private Rectangle r;
 
     private final int R = 2;
     private final int ROTATIONSPEED = 2;
-    private int currentHealth = 100;
-    private int lives = 3;
+    private int currentHealth;
+    private int lives;
     private ArrayList<Bullet> bullets;
 
     private BufferedImage img;
@@ -44,8 +45,18 @@ public class Tank implements CollidableObject {
 
     public int getY() { return y; }
 
-    void setCurrentHealth(int currentHealth){
-        this.currentHealth = currentHealth;
+    public void removeHealth(int value){
+        if(currentHealth - value <= 0)
+            currentHealth = 0;
+        else
+            currentHealth -= value;
+    }
+
+    public void addHealth(int value){
+        if(currentHealth + value >= 100)
+            currentHealth = 100;
+        else
+            currentHealth += value;
     }
 
     public int getCurrentHealth() { return currentHealth; }
@@ -144,8 +155,11 @@ public class Tank implements CollidableObject {
     }
 
     @Override
-    public void checkCollision() {
-
+    public void checkCollision(Class obj) {
+       /* r = new Rectangle(this.x, this.y, img.getWidth(), img.getHeight());
+        Rectangle objCollided = new Rectangle(obj.getX, obj.getY, onj.getWidth, obj.getHeight);
+        if(this.r.intersects(objCollided))
+*/
     }
 
     @Override

@@ -16,7 +16,7 @@ public class Bullet implements CollidableObject {
     }
 
     @Override
-    public void checkCollision() {
+    public void checkCollision(Class c) {
 
     }
 

@@ -6,20 +6,20 @@ import java.awt.image.BufferedImage;
 public class BreakableWall extends Wall {
     private int x, y;
     private Rectangle r;
-    private BufferedImage wallImg;
+    private static BufferedImage wallImg;
 
-    public BreakableWall(int x, int y, BufferedImage img){
+    public BreakableWall(int x, int y){
         this.x = x;
         this.y = y;
-        this.r = new Rectangle(x, y, img.getWidth(), img.getHeight());
+        this.r = new Rectangle(x, y, wallImg.getWidth(), wallImg.getHeight());
     }
 
-    public void setImg(BufferedImage wallImg){
-        this.wallImg = wallImg;
+    public static void setImg(BufferedImage img){
+        wallImg = img;
     }
 
     @Override
-    public void checkCollision() {
+    public void checkCollision(Class c) {
     }
 
     @Override
