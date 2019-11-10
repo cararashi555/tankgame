@@ -1,5 +1,7 @@
 package tankwars;
 
+import tankwars.walls.Wall;
+
 import java.awt.*;
 
 public interface CollidableObject {

@@ -4,15 +4,22 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Bullet implements CollidableObject {
-    private BufferedImage bulletImg;
+    private static BufferedImage bulletImg;
     private BufferedImage explosion;
-    private Tank owner;
-    private int x, y;
+    private int x, y, angle;
 
-    Bullet(int x, int y, Tank owner){
+    public Bullet(int x, int y, int angle){
         this.x = x;
         this.y = y;
-        this.owner = owner;
+        this.angle =  angle;
+    }
+
+    public void drawImage(Graphics2D buffer){
+        buffer.drawImage(bulletImg, x, y, null);
+    }
+
+    public static void setImg(BufferedImage img){
+        bulletImg = img;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package tankwars.walls;
 
+import tankwars.Tank;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -20,6 +22,7 @@ public class BreakableWall extends Wall {
 
     @Override
     public void checkCollision(Class c) {
+
     }
 
     @Override

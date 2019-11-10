@@ -25,8 +25,8 @@ public class Background extends JPanel {
 
     void drawImage(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        for(int i = 0; i < GameWorld.SCREEN_WIDTH; i+=background.getWidth()){
-            for(int j = 0; j < GameWorld.SCREEN_HEIGHT; j+=background.getHeight()){
+        for(int i = 0; i < GameWorld.WORLD_WIDTH; i+=background.getWidth()){
+            for(int j = 0; j < GameWorld.WORLD_HEIGHT; j+=background.getHeight()){
                 g2d.drawImage(this.background, i,j, null);
             }
         }

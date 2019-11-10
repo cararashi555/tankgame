@@ -2,6 +2,8 @@ package tankwars;
 
 
 
+import tankwars.walls.Wall;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -16,9 +18,10 @@ public class Tank implements CollidableObject {
     private int vy;
     private int angle;
     private Rectangle r;
+    private GameWorld game;
 
-    private final int R = 2;
-    private final int ROTATIONSPEED = 2;
+    private final int R = 5;
+    private final int ROTATIONSPEED = 5;
     private int currentHealth;
     private int lives;
     private ArrayList<Bullet> bullets;
@@ -143,6 +146,7 @@ public class Tank implements CollidableObject {
     }
 
     private void moveForwards() {
+
         vx = (int) Math.round(R * Math.cos(Math.toRadians(angle)));
         vy = (int) Math.round(R * Math.sin(Math.toRadians(angle)));
         x += vx;
@@ -151,16 +155,11 @@ public class Tank implements CollidableObject {
     }
 
     private void shootBullet() {
-
+        Bullet b = new Bullet(this.x, this.y, this.angle);
     }
 
     @Override
-    public void checkCollision(Class obj) {
-       /* r = new Rectangle(this.x, this.y, img.getWidth(), img.getHeight());
-        Rectangle objCollided = new Rectangle(obj.getX, obj.getY, onj.getWidth, obj.getHeight);
-        if(this.r.intersects(objCollided))
-*/
-    }
+    public void checkCollision(Class c) {}
 
     @Override
     public Rectangle getRectangle() {
@@ -172,14 +171,14 @@ public class Tank implements CollidableObject {
         if (x < 30) {
             x = 30;
         }
-        if (x >= GameWorld.SCREEN_WIDTH - 88) {
-            x = GameWorld.SCREEN_WIDTH - 88;
+        if (x >= GameWorld.WORLD_WIDTH - 88) {
+            x = GameWorld.WORLD_WIDTH - 88;
         }
         if (y < 40) {
             y = 40;
         }
-        if (y >= GameWorld.SCREEN_HEIGHT - 80) {
-            y = GameWorld.SCREEN_HEIGHT - 80;
+        if (y >= GameWorld.WORLD_HEIGHT - 80) {
+            y = GameWorld.WORLD_HEIGHT - 80;
         }
     }
 
