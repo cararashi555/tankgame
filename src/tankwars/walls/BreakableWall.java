@@ -1,5 +1,8 @@
 package tankwars.walls;
 
+import tankwars.Bullet;
+import tankwars.CollidableObject;
+import tankwars.GameWorld;
 import tankwars.Tank;
 
 import java.awt.*;
@@ -9,6 +12,7 @@ public class BreakableWall extends Wall {
     private int x, y;
     private Rectangle r;
     private static BufferedImage wallImg;
+    private GameWorld g;
 
     public BreakableWall(int x, int y){
         this.x = x;
@@ -21,8 +25,10 @@ public class BreakableWall extends Wall {
     }
 
     @Override
-    public void checkCollision(Class c) {
+    public void checkCollision(CollidableObject c) {
+        if(this.getRectangle().intersects(c.getRectangle())){
 
+        }
     }
 
     @Override

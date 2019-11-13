@@ -10,7 +10,10 @@ public abstract class Wall implements CollidableObject {
     public Wall(){};
 
     @Override
-    public void checkCollision(Class c) { }
+    public void checkCollision(CollidableObject c) {
+        this.getRectangle().intersects(c.getRectangle());
+
+    }
 
     @Override
     public Rectangle getRectangle() {

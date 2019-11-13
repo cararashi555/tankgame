@@ -6,6 +6,8 @@
 package tankwars;
 
 
+import tankwars.powerup.ExtraLife;
+import tankwars.powerup.PowerUp;
 import tankwars.walls.BreakableWall;
 import tankwars.walls.UnbreakableWall;
 import tankwars.walls.Wall;
@@ -34,8 +36,9 @@ public class GameWorld extends JPanel  {
     private JFrame jf;
     private Tank t1;
     private Tank t2;
-    private ArrayList<Bullet> bullets;
     private ArrayList<Wall> walls = new ArrayList<>();
+    private ArrayList<PowerUp> powerUps = new ArrayList<>();
+    private ArrayList<CollidableObject> gameObjects = new ArrayList<>();
 
 
     public static void main(String[] args) {
@@ -59,7 +62,7 @@ public class GameWorld extends JPanel  {
         this.jf = new JFrame("Tank Wars");
 
         this.world = new BufferedImage(GameWorld.WORLD_WIDTH, GameWorld.WORLD_HEIGHT, BufferedImage.TYPE_INT_RGB);
-        BufferedImage t1img = null, background, unbreakableWall = null, bullet, breakableWall = null;
+        BufferedImage t1img = null, background, unbreakableWall = null, bullet, extraLife, breakableWall = null;
 
         try {
             BufferedImage tmp;
@@ -77,11 +80,17 @@ public class GameWorld extends JPanel  {
             bullet = read(new File("resources/Weapon.gif"));
             Bullet.setImg(bullet);
 
+            //extraLife = read(new File("resources/power-up-1.png"));
+           // ExtraLife.setImg(extraLife);
+
+
+
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
         t1 = new Tank(430, 600, 0, 0, 0, t1img);
         t2 = new Tank(1200, 600, 0, 0, 180, t1img);
+
 
         /**
          * Add coordinates to breakable and unbreakable walls.
@@ -106,8 +115,14 @@ public class GameWorld extends JPanel  {
             walls.add(new BreakableWall(WORLD_WIDTH / 2 + 32, i));
         }
 
+        //powerUps.add(new ExtraLife(250, 550));
+
         TankControl tc1 = new TankControl(t1, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_SPACE);
         TankControl tc2 = new TankControl(t2, KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_ENTER);
+
+        gameObjects.add(t1);
+        gameObjects.add(t2);
+        gameObjects.addAll(walls);
 
         this.jf.setLayout(new BorderLayout());
         this.jf.add(this);
@@ -176,9 +191,17 @@ public class GameWorld extends JPanel  {
         for(Wall w: walls){
             w.drawImage(buffer);
         }
+        /*for(PowerUp p : powerUps)
+            p.drawImage(buffer);*/
 
         this.t1.drawImage(buffer);
         this.t2.drawImage(buffer);
+
+        for(Bullet b : t1.getBullets())
+            b.drawImage(buffer);
+
+        for(Bullet b : t2.getBullets())
+            b.drawImage(buffer);
 
         BufferedImage leftScreen = world.getSubimage(getXCoordinate(t1) - SCREEN_WIDTH / 4, getYCoordinate(t1) - SCREEN_HEIGHT / 2, SCREEN_WIDTH / 2, SCREEN_HEIGHT);
         BufferedImage rightScreen = world.getSubimage(getXCoordinate(t2) - SCREEN_WIDTH / 4, getYCoordinate(t2) - SCREEN_HEIGHT / 2, SCREEN_WIDTH / 2, SCREEN_HEIGHT);

@@ -17,14 +17,13 @@ public class Tank implements CollidableObject {
     private int vx;
     private int vy;
     private int angle;
+    private int waitTime = 0;
     private Rectangle r;
-    private GameWorld game;
 
     private final int R = 5;
     private final int ROTATIONSPEED = 5;
     private int currentHealth;
     private int lives;
-    private ArrayList<Bullet> bullets;
 
     private BufferedImage img;
     private boolean UpPressed;
@@ -32,6 +31,8 @@ public class Tank implements CollidableObject {
     private boolean RightPressed;
     private boolean LeftPressed;
     private boolean ShootPressed;
+    private ArrayList<Bullet> bullets = new ArrayList<>();
+    private boolean stop = false;
 
 
     Tank(int x, int y, int vx, int vy, int angle, BufferedImage img) {
@@ -41,6 +42,7 @@ public class Tank implements CollidableObject {
         this.vy = vy;
         this.img = img;
         this.angle = angle;
+        this.r = new Rectangle(x, y, img.getWidth(), img.getHeight());
 
     }
 
@@ -48,14 +50,14 @@ public class Tank implements CollidableObject {
 
     public int getY() { return y; }
 
-    public void removeHealth(int value){
+    public void collided(int value){
         if(currentHealth - value <= 0)
             currentHealth = 0;
         else
             currentHealth -= value;
     }
 
-    public void addHealth(int value){
+    public void powerHealth(int value){
         if(currentHealth + value >= 100)
             currentHealth = 100;
         else
@@ -124,8 +126,9 @@ public class Tank implements CollidableObject {
         if (this.RightPressed) {
             this.rotateRight();
         }
-        if (this.ShootPressed) {
+        if (this.ShootPressed && System.currentTimeMillis() - waitTime  > 1000) {
             this.shootBullet();
+            waitTime = (int) System.currentTimeMillis();
         }
     }
 
@@ -140,13 +143,14 @@ public class Tank implements CollidableObject {
     private void moveBackwards() {
         vx = (int) Math.round(R * Math.cos(Math.toRadians(angle)));
         vy = (int) Math.round(R * Math.sin(Math.toRadians(angle)));
-        x -= vx;
-        y -= vy;
+        if(!stop){
+            x -= vx;
+            y -= vy;
+        }
         checkBorder();
     }
 
     private void moveForwards() {
-
         vx = (int) Math.round(R * Math.cos(Math.toRadians(angle)));
         vy = (int) Math.round(R * Math.sin(Math.toRadians(angle)));
         x += vx;
@@ -156,14 +160,23 @@ public class Tank implements CollidableObject {
 
     private void shootBullet() {
         Bullet b = new Bullet(this.x, this.y, this.angle);
+        bullets.add(b);
     }
 
     @Override
-    public void checkCollision(Class c) {}
+    public void checkCollision(CollidableObject c) {
+        if(this.getRectangle().intersects(c.getRectangle())){
+            if(c instanceof Bullet){
+                collided(10);
+            }
+            this.stop = true;
+        }
+        this.stop = false;
+    }
 
     @Override
     public Rectangle getRectangle() {
-        return new Rectangle(x, y, img.getWidth(), img.getHeight());
+        return new Rectangle(this.x, this.y, img.getWidth(), img.getHeight());
     }
 
 
@@ -185,6 +198,10 @@ public class Tank implements CollidableObject {
     @Override
     public String toString() {
         return "x=" + x + ", y=" + y + ", angle=" + angle;
+    }
+
+    public ArrayList<Bullet> getBullets(){
+        return bullets;
     }
 
 

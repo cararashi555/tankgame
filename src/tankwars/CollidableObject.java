@@ -1,11 +1,9 @@
 package tankwars;
 
-import tankwars.walls.Wall;
-
 import java.awt.*;
 
 public interface CollidableObject {
-    public void checkCollision(Class c);
+    public void checkCollision(CollidableObject c);
     public Rectangle getRectangle();
 
 }

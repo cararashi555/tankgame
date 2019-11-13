@@ -20,13 +20,10 @@ public class UnbreakableWall extends Wall {
         UnbreakableWall.wallImg = img;
     }
 
-    @Override
-    public void checkCollision(Class c) {
-    }
 
     @Override
     public Rectangle getRectangle() {
-        return r;
+        return new Rectangle(x, y, wallImg.getWidth(), wallImg.getHeight());
     }
 
     public void drawImage(Graphics2D buffer){
