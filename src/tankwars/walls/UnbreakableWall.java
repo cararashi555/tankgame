@@ -1,5 +1,7 @@
 package tankwars.walls;
 
+import tankwars.CollidableObject;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -22,11 +24,19 @@ public class UnbreakableWall extends Wall {
 
 
     @Override
+    public void checkCollision(CollidableObject c) { }
+
+    @Override
     public Rectangle getRectangle() {
         return new Rectangle(x, y, wallImg.getWidth(), wallImg.getHeight());
     }
 
     public void drawImage(Graphics2D buffer){
         buffer.drawImage(wallImg, x, y, null);
+    }
+
+    @Override
+    public boolean hasCollided() {
+        return false;
     }
 }

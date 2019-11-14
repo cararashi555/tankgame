@@ -12,7 +12,7 @@ public class BreakableWall extends Wall {
     private int x, y;
     private Rectangle r;
     private static BufferedImage wallImg;
-    private GameWorld g;
+    private boolean collided = false;
 
     public BreakableWall(int x, int y){
         this.x = x;
@@ -26,14 +26,20 @@ public class BreakableWall extends Wall {
 
     @Override
     public void checkCollision(CollidableObject c) {
-        if(this.getRectangle().intersects(c.getRectangle())){
-
+        if(c instanceof Bullet){
+            if(this.getRectangle().intersects(c.getRectangle())){
+                collided = true;
+            }
         }
+    }
+
+    public boolean hasCollided() {
+        return collided;
     }
 
     @Override
     public Rectangle getRectangle() {
-        return new Rectangle(x, y, wallImg.getWidth(), wallImg.getHeight());
+        return r;
     }
 
     public void drawImage(Graphics2D buffer){

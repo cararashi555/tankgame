@@ -36,9 +36,7 @@ public class GameWorld extends JPanel  {
     private JFrame jf;
     private Tank t1;
     private Tank t2;
-    private ArrayList<Wall> walls = new ArrayList<>();
-    private ArrayList<PowerUp> powerUps = new ArrayList<>();
-    private ArrayList<CollidableObject> gameObjects = new ArrayList<>();
+    private GameMap map;
 
 
     public static void main(String[] args) {
@@ -49,8 +47,8 @@ public class GameWorld extends JPanel  {
 
             while (true) {
                 trex.repaint();
-                System.out.println(trex.t1);
-                System.out.println(trex.t2);
+//                System.out.println(trex.t1);
+//                System.out.println(trex.t2);
                 Thread.sleep(1000 / 144);
             }
         } catch (InterruptedException ignored) {
@@ -91,38 +89,36 @@ public class GameWorld extends JPanel  {
         t1 = new Tank(430, 600, 0, 0, 0, t1img);
         t2 = new Tank(1200, 600, 0, 0, 180, t1img);
 
-
-        /**
-         * Add coordinates to breakable and unbreakable walls.
-         * Then add all to ArrayList<Wall>
-         */
-        for(int i = 0; i < WORLD_WIDTH; i += unbreakableWall.getHeight()){
-            walls.add(new UnbreakableWall(i, 0));
-            walls.add(new UnbreakableWall(i, WORLD_HEIGHT - unbreakableWall.getHeight()));
-        }
-        for(int i = unbreakableWall.getHeight(); i < WORLD_HEIGHT; i += unbreakableWall.getHeight()){
-            walls.add(new UnbreakableWall(WORLD_WIDTH - unbreakableWall.getHeight(), i));
-            walls.add(new UnbreakableWall(0, i));
-        }
-
-        for(int i = WORLD_WIDTH / 10; i < WORLD_WIDTH; i += 192){
-            for(int j = WORLD_HEIGHT / 4; j < WORLD_HEIGHT - 192; j += 192){
-                walls.add(new BreakableWall(i, j));
-            }
-        }
-
-        for(int i = 64; i < WORLD_HEIGHT - 64; i += breakableWall.getHeight()){
-            walls.add(new BreakableWall(WORLD_WIDTH / 2 + 32, i));
-        }
+        map = new GameMap();
+//        /**
+//         * Add coordinates to breakable and unbreakable walls.
+//         * Then add all to ArrayList<Wall>
+//         *
+//         **/
+//
+//        for(int i = 0; i < WORLD_WIDTH; i += unbreakableWall.getHeight()){
+//            walls.add(new UnbreakableWall(i, 0));
+//            walls.add(new UnbreakableWall(i, WORLD_HEIGHT - unbreakableWall.getHeight()));
+//        }
+//        for(int i = unbreakableWall.getHeight(); i < WORLD_HEIGHT; i += unbreakableWall.getHeight()){
+//            walls.add(new UnbreakableWall(WORLD_WIDTH - unbreakableWall.getHeight(), i));
+//            walls.add(new UnbreakableWall(0, i));
+//        }
+//
+//        for(int i = WORLD_WIDTH / 10; i < WORLD_WIDTH; i += 192){
+//            for(int j = WORLD_HEIGHT / 4; j < WORLD_HEIGHT - 192; j += 192){
+//                walls.add(new BreakableWall(i, j));
+//            }
+//        }
+//
+//        for(int i = 64; i < WORLD_HEIGHT - 64; i += breakableWall.getHeight()){
+//            walls.add(new BreakableWall(WORLD_WIDTH / 2 + 32, i));
+//        }
 
         //powerUps.add(new ExtraLife(250, 550));
 
         TankControl tc1 = new TankControl(t1, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_SPACE);
         TankControl tc2 = new TankControl(t2, KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_ENTER);
-
-        gameObjects.add(t1);
-        gameObjects.add(t2);
-        gameObjects.addAll(walls);
 
         this.jf.setLayout(new BorderLayout());
         this.jf.add(this);
@@ -143,6 +139,11 @@ public class GameWorld extends JPanel  {
     private void update(){
         t1.update();
         t2.update();
+
+        t1.checkCollision(t2);
+        t2.checkCollision(t1);
+        map.handleCollision(t1);
+        map.handleCollision(t2);
     }
 
     /**
@@ -185,29 +186,22 @@ public class GameWorld extends JPanel  {
         this.setBackground(Color.black);
         this.backgroundImg.drawImage(buffer);
 
-        /**
-         * Draw all walls (breakable and unbreakable)
-         */
-        for(Wall w: walls){
-            w.drawImage(buffer);
-        }
+        map.drawImage(buffer);
         /*for(PowerUp p : powerUps)
             p.drawImage(buffer);*/
 
         this.t1.drawImage(buffer);
         this.t2.drawImage(buffer);
 
-        for(Bullet b : t1.getBullets())
-            b.drawImage(buffer);
-
-        for(Bullet b : t2.getBullets())
-            b.drawImage(buffer);
-
         BufferedImage leftScreen = world.getSubimage(getXCoordinate(t1) - SCREEN_WIDTH / 4, getYCoordinate(t1) - SCREEN_HEIGHT / 2, SCREEN_WIDTH / 2, SCREEN_HEIGHT);
         BufferedImage rightScreen = world.getSubimage(getXCoordinate(t2) - SCREEN_WIDTH / 4, getYCoordinate(t2) - SCREEN_HEIGHT / 2, SCREEN_WIDTH / 2, SCREEN_HEIGHT);
 
         g2.drawImage(leftScreen, 0, 0, null);
         g2.drawImage(rightScreen, SCREEN_WIDTH / 2 + 10, 0, null);
+
+        g2.setColor(Color.GREEN);
+        g2.fillRect(SCREEN_WIDTH / 4 - 60, 30, 2* t1.getCurrentHealth(), 30);
+        g2.fillRect(SCREEN_WIDTH - SCREEN_WIDTH / 4 - 140, 30, 2* t2.getCurrentHealth(), 30);
 
         /**
          * Add minimap. Set its width and length to 1/5 of WORLD_WIDTH and WORLD_HEIGHT respectively.
