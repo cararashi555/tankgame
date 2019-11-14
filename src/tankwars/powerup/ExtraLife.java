@@ -1,6 +1,5 @@
 package tankwars.powerup;
 
-import tankwars.Bullet;
 import tankwars.CollidableObject;
 import tankwars.Tank;
 
@@ -28,6 +27,8 @@ public class ExtraLife extends PowerUp {
         if(c instanceof Tank){
             if(this.getRectangle().intersects(c.getRectangle())){
                 collided = true;
+                ((Tank) c).addLife();
+                ((Tank) c).powerHealth(100);
             }
         }
     }

@@ -2,6 +2,8 @@ package tankwars;
 
 
 
+import tankwars.powerup.ExtraLife;
+import tankwars.powerup.PowerUp;
 import tankwars.walls.Wall;
 
 import java.awt.*;
@@ -17,13 +19,13 @@ public class Tank implements CollidableObject {
     private int vx;
     private int vy;
     private int angle;
-    private int waitTime = 0;
     private Rectangle r;
 
-    private final int R = 5;
-    private final int ROTATIONSPEED = 5;
+    private int R = 5;
+    private final int ROTATIONSPEED = 4;
     private int currentHealth = 100;
     private int lives = 3;
+    private boolean alive = true;
 
     private BufferedImage img;
     private boolean UpPressed;
@@ -49,10 +51,12 @@ public class Tank implements CollidableObject {
 
     public int getY() { return y; }
 
+    public void setSpeed(int value) { this.R+=value; }
+
     public void collided(int value){
         if(currentHealth - value <= 0){
             currentHealth = 0;
-            setLives(lives - 1);
+            removeLife();
         }
         else
             currentHealth -= value;
@@ -67,9 +71,19 @@ public class Tank implements CollidableObject {
 
     public int getCurrentHealth() { return currentHealth; }
 
-    public int getLives() { return lives; }
 
-    public void setLives(int lives) { this.lives = lives; }
+    public boolean getStatus() { return alive; }
+
+    public void addLife() { this.lives += 1; }
+
+    public void removeLife() {
+        if(lives == 0){
+            alive = false;
+        } else {
+            lives-= 1;
+            powerHealth(100);
+        }
+    }
 
     void toggleUpPressed() {
         this.UpPressed = true;
