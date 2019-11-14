@@ -1,5 +1,6 @@
 package tankwars;
 
+import tankwars.powerup.ExtraLife;
 import tankwars.powerup.PowerUp;
 import tankwars.walls.BreakableWall;
 import tankwars.walls.UnbreakableWall;
@@ -37,6 +38,10 @@ public class GameMap {
         for(int i = 64; i < height - 64; i += 32){
             walls.add(new BreakableWall(width / 2 + 32, i));
         }
+
+        powerUps.add(new ExtraLife(250, 550));
+        powerUps.add(new ExtraLife(1000, 800));
+        powerUps.add(new ExtraLife(1200, 1300));
     }
 
     public void handleCollision(CollidableObject c) {
@@ -47,12 +52,22 @@ public class GameMap {
                 walls.remove(i);
             }
         }
+        for(int i = 0; i < powerUps.size(); i++){
+            powerUps.get(i).checkCollision(c);
+            if(powerUps.get(i).hasCollided()){
+                powerUps.remove(i);
+            }
+        }
     }
 
     public void drawImage(Graphics g) {
         Graphics2D g2g = (Graphics2D) g;
-        for(int i = 0; i < walls.size(); i++)
+        for(int i = 0; i < walls.size(); i++) {
             walls.get(i).drawImage(g2g);
+        }
+        for(int i = 0; i < powerUps.size(); i++){
+            powerUps.get(i).drawImage(g2g);
+        }
     }
 }
 

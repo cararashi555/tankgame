@@ -5,12 +5,9 @@
  */
 package tankwars;
 
-
-import tankwars.powerup.ExtraLife;
-import tankwars.powerup.PowerUp;
 import tankwars.walls.BreakableWall;
 import tankwars.walls.UnbreakableWall;
-import tankwars.walls.Wall;
+import tankwars.powerup.ExtraLife;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +15,6 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import static javax.imageio.ImageIO.read;
 
@@ -78,8 +74,8 @@ public class GameWorld extends JPanel  {
             bullet = read(new File("resources/Weapon.gif"));
             Bullet.setImg(bullet);
 
-            //extraLife = read(new File("resources/power-up-1.png"));
-           // ExtraLife.setImg(extraLife);
+            extraLife = read(new File("resources/extraLife.png"));
+            ExtraLife.setImg(extraLife);
 
 
 
@@ -187,8 +183,6 @@ public class GameWorld extends JPanel  {
         this.backgroundImg.drawImage(buffer);
 
         map.drawImage(buffer);
-        /*for(PowerUp p : powerUps)
-            p.drawImage(buffer);*/
 
         this.t1.drawImage(buffer);
         this.t2.drawImage(buffer);

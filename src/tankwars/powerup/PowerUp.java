@@ -15,4 +15,6 @@ public abstract class PowerUp implements CollidableObject{
     public static void setImg(BufferedImage powerUp){ }
 
     public void drawImage(Graphics2D buffer){ }
+
+    public abstract boolean hasCollided();
 }
