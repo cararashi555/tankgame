@@ -44,7 +44,7 @@ public class GameMap {
             c.checkCollision(walls.get(i));
             walls.get(i).checkCollision(c);
             if(walls.get(i).hasCollided()){
-                    walls.remove(i);
+                walls.remove(i);
             }
         }
     }

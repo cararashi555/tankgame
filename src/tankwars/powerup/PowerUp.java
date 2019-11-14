@@ -7,13 +7,12 @@ import java.awt.image.BufferedImage;
 
 public abstract class PowerUp implements CollidableObject{
     @Override
-    public void checkCollision(CollidableObject c) {
-        this.getRectangle().intersects(c.getRectangle());
-    }
+    public void checkCollision(CollidableObject c) { }
 
     @Override
     public Rectangle getRectangle() { return null; }
 
     public static void setImg(BufferedImage powerUp){ }
+
     public void drawImage(Graphics2D buffer){ }
 }

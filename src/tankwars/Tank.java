@@ -50,8 +50,10 @@ public class Tank implements CollidableObject {
     public int getY() { return y; }
 
     public void collided(int value){
-        if(currentHealth - value <= 0)
+        if(currentHealth - value <= 0){
             currentHealth = 0;
+            setLives(lives - 1);
+        }
         else
             currentHealth -= value;
     }
