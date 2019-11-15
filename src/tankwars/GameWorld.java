@@ -10,6 +10,7 @@ import tankwars.walls.BreakableWall;
 import tankwars.walls.UnbreakableWall;
 import tankwars.powerup.ExtraLife;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -59,33 +60,28 @@ public class GameWorld extends JPanel  {
         this.jf = new JFrame("Tank Wars");
 
         this.world = new BufferedImage(GameWorld.WORLD_WIDTH, GameWorld.WORLD_HEIGHT, BufferedImage.TYPE_INT_RGB);
-        BufferedImage t1img = null, background, unbreakableWall, bullet, speedBoost, extraLife, breakableWall = null;
+        BufferedImage t1img=null;
 
         try {
             BufferedImage tmp;
 
-            t1img = read(new File("resources/tank1.png"));
+            t1img = ImageIO.read(getClass().getResource("/resources/tank1.png"));
 
-            background = read(new File("resources/Background.bmp"));
-            backgroundImg = new Background(background);
+            backgroundImg = new Background(ImageIO.read(getClass().getResource("/resources/Background.bmp")));
 
-            unbreakableWall = read(new File("resources/Wall1.gif"));
-            UnbreakableWall.setImg(unbreakableWall);
-            breakableWall = read(new File("resources/Wall2.gif"));
-            BreakableWall.setImg(breakableWall);
+            UnbreakableWall.setImg(ImageIO.read(getClass().getResource("/resources/Wall1.gif")));
 
-            bullet = read(new File("resources/Weapon.gif"));
-            Bullet.setImg(bullet);
+            BreakableWall.setImg(ImageIO.read(getClass().getResource("/resources/Wall2.gif")));
 
-            extraLife = read(new File("resources/extraLife.png"));
-            ExtraLife.setImg(extraLife);
+            Bullet.setImg(ImageIO.read(getClass().getResource("/resources/Weapon.gif")));
 
-            speedBoost = read(new File("resources/speed-boost.png"));
-            SpeedBoost.setImg(speedBoost);
+            ExtraLife.setImg(ImageIO.read(getClass().getResource("/resources/extraLife.png")));
 
-            player1wins = read(new File("resources/player-1-wins.png"));
+            SpeedBoost.setImg(ImageIO.read(getClass().getResource("/resources/speed-boost.png")));
 
-            player2wins = read(new File("resources/player-2-wins.png"));
+            player1wins = ImageIO.read(getClass().getResource("/resources/player-1-wins.png"));
+
+            player2wins = ImageIO.read(getClass().getResource("/resources/player-2-wins.png"));
 
 
         } catch (IOException ex) {

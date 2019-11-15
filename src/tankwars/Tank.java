@@ -25,7 +25,6 @@ public class Tank implements CollidableObject {
     private final int ROTATIONSPEED = 4;
     private int currentHealth = 100;
     private int lives = 3;
-    private boolean alive = true;
 
     private BufferedImage img;
     private boolean UpPressed;
@@ -62,6 +61,10 @@ public class Tank implements CollidableObject {
             currentHealth -= value;
     }
 
+    public void setImg(BufferedImage img) {
+        this.img = img;
+    }
+
     public void powerHealth(int value){
         if(currentHealth + value >= 100)
             currentHealth = 100;
@@ -72,17 +75,15 @@ public class Tank implements CollidableObject {
     public int getCurrentHealth() { return currentHealth; }
 
 
-    public boolean getStatus() { return alive; }
-
     public void addLife() { this.lives += 1; }
 
     public int getLives() { return this.lives; }
 
     public void removeLife() {
         if(lives == 0){
-            alive = false;
+            currentHealth = 0;
         } else {
-            lives-= 1;
+            lives -= 1;
             powerHealth(100);
         }
     }
