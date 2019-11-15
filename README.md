@@ -43,9 +43,13 @@ tank. What these power ups are, is up to you).
 * Commands for player 2 are:
 
 [Key 'W']     -    Tank 2 moves upwards
+
 [Key 'S']     -    Tank 2 moves downwards
+
 [Key 'A']     -    Tank 2 rotates left
+
 [Key 'D']     -    Tank 2 rotates right
+
 [Key SPACE]   -    Tank 2 shoots
 
 * The game is over when one of the players looses all their lives.
