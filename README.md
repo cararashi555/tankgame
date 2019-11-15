@@ -54,7 +54,9 @@ tank. What these power ups are, is up to you).
 
 * The game is over when one of the players looses all their lives.
 * There are power ups in different locations of the GameMap. 
+
   Extra Life:  Adds one life to the tank who collects the heart.
+  
   Speed Boost: Increases the speed of the tank who collects the bolt.
   
   
