@@ -31,9 +31,13 @@ tank. What these power ups are, is up to you).
 * Commands for player 1 are:
 
 [Arrow UP]    -    Tank 1 moves upwards
+
 [Arrow DOWN]  -    Tank 1 moves downwards
+
 [Arrow LEFT]  -    Tank 1 rotates left
+
 [Arrow RIGHT] -    Tank 1 rotates right
+
 [Key ENTER]   -    Tank 1 shoots
 
 * Commands for player 2 are:
