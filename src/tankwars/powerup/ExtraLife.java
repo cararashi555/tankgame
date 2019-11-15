@@ -18,9 +18,15 @@ public class ExtraLife extends PowerUp {
         this.r = new Rectangle(x, y, img.getWidth(), img.getHeight());
     }
 
+    public static BufferedImage getImg() { return img; }
+
     public static void setImg(BufferedImage img){
         ExtraLife.img = img;
     }
+
+    public void setX(int x) { this.x = x;}
+
+    public void setY(int y) { this.y = y;}
 
     @Override
     public void checkCollision(CollidableObject c) {
@@ -35,6 +41,7 @@ public class ExtraLife extends PowerUp {
 
     public boolean hasCollided() { return collided; }
 
+
     @Override
     public Rectangle getRectangle() {
         return new Rectangle(x, y, img.getWidth(), img.getHeight());
@@ -43,4 +50,5 @@ public class ExtraLife extends PowerUp {
     public void drawImage(Graphics2D buffer){
         buffer.drawImage(img, x, y, null);
     }
+
 }

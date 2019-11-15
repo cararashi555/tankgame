@@ -27,6 +27,7 @@ public class GameWorld extends JPanel  {
     public static final int WORLD_WIDTH = 1600;
     public static final int WORLD_HEIGHT = 1200;
     private static boolean gameOver = false;
+    private static ExtraLife life;
 
     private BufferedImage world;
     private Background backgroundImg;
@@ -81,7 +82,6 @@ public class GameWorld extends JPanel  {
             SpeedBoost.setImg(speedBoost);
 
 
-
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
@@ -89,6 +89,8 @@ public class GameWorld extends JPanel  {
         t2 = new Tank(1200, 600, 0, 0, 180, t1img);
 
         map = new GameMap();
+
+        life = new ExtraLife(0, 0);
 
         TankControl tc1 = new TankControl(t1, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_SPACE);
         TankControl tc2 = new TankControl(t2, KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_ENTER);
@@ -184,10 +186,29 @@ public class GameWorld extends JPanel  {
         g2.drawImage(leftScreen, 0, 0, null);
         g2.drawImage(rightScreen, SCREEN_WIDTH / 2 + 10, 0, null);
 
+        int location;
+        for(int i=1; i <= t1.getLives(); i++){
+            location = (life.getImg().getWidth() + 40) * i;
+            life.setX(location/2);
+            life.setY(10);
+            life.drawImage(g2);
+        }
+
+        for(int i=1; i <= t2.getLives(); i++){
+            location = (life.getImg().getWidth() + 40) * i;
+            life.setX(location/2 + SCREEN_WIDTH - SCREEN_WIDTH / 2 + 10);
+            life.setY(10);
+            life.drawImage(g2);
+        }
+
         g2.setColor(Color.GREEN);
         g2.fillRect(SCREEN_WIDTH / 4, 30, 2* t1.getCurrentHealth(), 20);
         g2.fillRect(SCREEN_WIDTH - SCREEN_WIDTH / 4, 30, 2* t2.getCurrentHealth(), 20);
 
+
+//        for(int i = t2.getLives(); i >= 1; i--){
+//
+//        }
 
         /**
          * Add minimap. Set its width and length to 1/5 of WORLD_WIDTH and WORLD_HEIGHT respectively.

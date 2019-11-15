@@ -76,6 +76,8 @@ public class Tank implements CollidableObject {
 
     public void addLife() { this.lives += 1; }
 
+    public int getLives() { return this.lives; }
+
     public void removeLife() {
         if(lives == 0){
             alive = false;
