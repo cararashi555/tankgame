@@ -92,8 +92,8 @@ public class GameWorld extends JPanel  {
 
         life = new ExtraLife(0, 0);
 
-        TankControl tc1 = new TankControl(t1, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_SPACE);
-        TankControl tc2 = new TankControl(t2, KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_ENTER);
+        TankControl tc1 = new TankControl(t1, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_ENTER);
+        TankControl tc2 = new TankControl(t2, KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_SPACE);
 
         this.jf.setLayout(new BorderLayout());
         this.jf.add(this);
@@ -205,10 +205,6 @@ public class GameWorld extends JPanel  {
         g2.fillRect(SCREEN_WIDTH / 4, 30, 2* t1.getCurrentHealth(), 20);
         g2.fillRect(SCREEN_WIDTH - SCREEN_WIDTH / 4, 30, 2* t2.getCurrentHealth(), 20);
 
-
-//        for(int i = t2.getLives(); i >= 1; i--){
-//
-//        }
 
         /**
          * Add minimap. Set its width and length to 1/5 of WORLD_WIDTH and WORLD_HEIGHT respectively.
