@@ -183,18 +183,17 @@ public class GameWorld extends JPanel  {
         g2.drawImage(rightScreen, SCREEN_WIDTH / 2 + 10, 0, null);
 
         int location;
+        int placement;
         for(int i=1; i <= t1.getLives(); i++){
             location = (life.getImg().getWidth() + 40) * i;
-            life.setX(location/2);
-            life.setY(10);
-            life.drawImage(g2);
+            placement = location / 2;
+            g2.drawImage(life.getImg(), placement, 10, null);
         }
 
         for(int i=1; i <= t2.getLives(); i++){
             location = (life.getImg().getWidth() + 40) * i;
-            life.setX(location/2 + SCREEN_WIDTH - SCREEN_WIDTH / 2 + 10);
-            life.setY(10);
-            life.drawImage(g2);
+            placement = location/2 + SCREEN_WIDTH - SCREEN_WIDTH / 2 + 10;
+            g2.drawImage(life.getImg(), placement, 10, null);
         }
 
         g2.setColor(Color.GREEN);
