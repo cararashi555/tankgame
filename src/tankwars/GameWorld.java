@@ -30,6 +30,8 @@ public class GameWorld extends JPanel  {
     private static ExtraLife life;
 
     private BufferedImage world;
+    private BufferedImage player1wins;
+    private BufferedImage player2wins;
     private Background backgroundImg;
     private Graphics2D buffer;
     private JFrame jf;
@@ -57,7 +59,7 @@ public class GameWorld extends JPanel  {
         this.jf = new JFrame("Tank Wars");
 
         this.world = new BufferedImage(GameWorld.WORLD_WIDTH, GameWorld.WORLD_HEIGHT, BufferedImage.TYPE_INT_RGB);
-        BufferedImage t1img = null, background, unbreakableWall = null, bullet, speedBoost, extraLife, breakableWall = null;
+        BufferedImage t1img = null, background, unbreakableWall, bullet, speedBoost, extraLife, breakableWall = null;
 
         try {
             BufferedImage tmp;
@@ -80,6 +82,10 @@ public class GameWorld extends JPanel  {
 
             speedBoost = read(new File("resources/speed-boost.png"));
             SpeedBoost.setImg(speedBoost);
+
+            player1wins = read(new File("resources/player-1-wins.png"));
+
+            player2wins = read(new File("resources/player-2-wins.png"));
 
 
         } catch (IOException ex) {
@@ -122,17 +128,6 @@ public class GameWorld extends JPanel  {
 
     }
 
-    private void checkWinner(){
-        if(!t1.getStatus()) {
-            gameOver = true;
-        }
-
-        if(!t2.getStatus()) {
-            gameOver = true;
-        }
-    }
-
-
     /**
         X coordinate for split screen mode. Screen size becomes SCREEN_WIDTH / 2.
         Tanks need to be located with an X coordinate that equals to half of the split screen.
@@ -165,14 +160,15 @@ public class GameWorld extends JPanel  {
 
     @Override
     public void paintComponent(Graphics g) {
-        update();
-        checkWinner();
-
         Graphics2D g2 = (Graphics2D) g;
+        update();
+
         buffer = world.createGraphics();
+
         super.paintComponent(g2);
 
         this.setBackground(Color.black);
+
         this.backgroundImg.drawImage(buffer);
 
         map.drawImage(buffer);
@@ -205,11 +201,21 @@ public class GameWorld extends JPanel  {
         g2.fillRect(SCREEN_WIDTH / 4, 30, 2* t1.getCurrentHealth(), 20);
         g2.fillRect(SCREEN_WIDTH - SCREEN_WIDTH / 4, 30, 2* t2.getCurrentHealth(), 20);
 
-
         /**
          * Add minimap. Set its width and length to 1/5 of WORLD_WIDTH and WORLD_HEIGHT respectively.
          */
         g2.drawImage(world, SCREEN_WIDTH / 2 - WORLD_WIDTH / 10, SCREEN_HEIGHT - WORLD_HEIGHT / 5, WORLD_WIDTH / 5, WORLD_HEIGHT / 5, null);
+
+        if(t1.getLives() == 0){
+            g2.drawImage(player2wins, 0, 0, SCREEN_WIDTH + 10, SCREEN_HEIGHT, null);
+            gameOver = true;
+        }
+
+        if(t2.getLives() == 0) {
+            g2.drawImage(player1wins, 0, 0, SCREEN_WIDTH + 10, SCREEN_HEIGHT, null);
+            gameOver = true;
+        }
+
     }
 
 
