@@ -1,8 +1,5 @@
 # csc413-tankgame
 
-## Student Name  : Maria Seljak
-## Student ID    : 915736307
-
 # Term Project
 This project consists on practicing good OOP in Java by implementing the Tank Wars Game. It was made using IntelliJ IDE using Java version 8 update 221. The game fullfils the following requirements:
 1. Tank Game must have 2 Players
